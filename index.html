@@ -1,9 +1,15 @@
+<!doctype html>
 <html>
   <head>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MindAR - Animales</title>
+
+    <!-- Librerías -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
     <style>
       body { margin: 0; overflow: hidden; font-family: sans-serif; }
       #ui {
@@ -21,27 +27,31 @@
     </style>
   </head>
   <body>
+    <!-- UI -->
     <div id="ui">
       <h2>🔎 Busca los targets de los animales</h2>
     </div>
 
-    <a-scene> 
-      <mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2">
-      <color-space="sRGB"> 
-      <renderer="colorManagement: true, physicallyCorrectLights"> 
-      <vr-mode-ui="enabled: false"> 
-      <device-orientation-permission-ui="enabled: false">
-
+    <!-- Escena AR -->
+    <a-scene
+      mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2"
+      color-space="sRGB"
+      renderer="colorManagement: true; physicallyCorrectLights: true"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+      embedded
+    >
+      <!-- Assets -->
       <a-assets>
         <a-asset-item id="pezModel" src="shiny_fish.glb"></a-asset-item>
         <a-asset-item id="tiburonModel" src="robot_shark.glb"></a-asset-item>
       </a-assets>
 
+      <!-- Cámara -->
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <!-- PEZ (targetIndex 0) -->
       <a-entity mindar-image-target="targetIndex: 0">
-        <!-- Contenedor de Naruto -->
         <a-entity position="0 0 0" scale="0.5 0.5 0.5">
           <a-gltf-model src="#pezModel" animation-mixer></a-gltf-model>
         </a-entity>
@@ -49,12 +59,10 @@
 
       <!-- TIBURON (targetIndex 1) -->
       <a-entity mindar-image-target="targetIndex: 1">
-        <!-- Contenedor de Madara con rotación para mirar hacia la cámara -->
         <a-entity position="0 0 0" scale="0.5 0.5 0.5" rotation="0 0 0">
           <a-gltf-model src="#tiburonModel" animation-mixer></a-gltf-model>
         </a-entity>
       </a-entity>
-
     </a-scene>
 
     <script>
@@ -63,6 +71,11 @@
       // Ocultar el mensaje cuando se detecta cualquier target
       document.addEventListener("targetFound", () => {
         ui.style.display = "none";
+      });
+
+      // Mostrar el mensaje si se pierden todos los targets
+      document.addEventListener("targetLost", () => {
+        ui.style.display = "block";
       });
     </script>
   </body>
