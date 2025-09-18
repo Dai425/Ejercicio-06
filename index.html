@@ -33,15 +33,14 @@
     </div>
 
     <!-- Escena AR -->
-    <a-scene
-      mindar-image="imageTargetSrc: targets.mind; maxTrack: 2"
-      color-space="sRGB"
-      renderer="colorManagement: true; physicallyCorrectLights: true"
-      vr-mode-ui="enabled: false"
-      device-orientation-permission-ui="enabled: false"
-      embedded
-    >
+    <a-scene 
+      mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 2" 
+      color-space="sRGB" 
+      renderer="colorManagement: true, physicallyCorrectLights" 
+      vr-mode-ui="enabled: false" 
+      device-orientation-permission-ui="enabled: false">
       <!-- Assets (todos en la misma carpeta que el HTML) -->
+      
       <a-assets>
         <a-asset-item id="pezModel" src="shiny_fish.glb"></a-asset-item>
         <a-asset-item id="tiburonModel" src="robot_shark.glb"></a-asset-item>
